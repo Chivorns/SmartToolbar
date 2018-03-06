@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SmartToolbar">
+        <attr name="smtb_showLeftBtn" format="boolean" />
+        <attr name="smtb_leftBtnIcon" format="reference" />
+        <attr name="smtb_showRightBtn" format="boolean" />
+        <attr name="smtb_rightBtnIcon" format="reference" />
+        <attr name="smtb_titleText" format="string" />
+        <attr name="smtb_titleColor" format="color" />
+        <attr name="smtb_showTitleImage" format="boolean" />
+        <attr name="smtb_titleIcon" format="reference" />
+    </declare-styleable>
+</resources>

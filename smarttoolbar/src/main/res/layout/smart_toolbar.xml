@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/smart_toolbar_bg_gradient">
+
+        <ImageView
+            android:id="@+id/actionbar_left_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="15dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:id="@+id/actionbar_title"
+            style="@style/default_smart_toolbar_style"
+            android:text="Sample Title" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/actionbar_title_image"
+            android:src="@drawable/ic_close_white_24dp"
+            style="@style/default_smart_toolbar_style" />
+
+        <ImageView
+            android:id="@+id/actionbar_right_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:paddingRight="15dp"
+            android:src="@drawable/ic_close_white_24dp" />
+    </FrameLayout>
+
+</LinearLayout>
