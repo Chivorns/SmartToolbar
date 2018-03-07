@@ -6,8 +6,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/smart_toolbar_bg_gradient">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/actionbar_left_btn"
@@ -23,10 +22,10 @@
             android:text="Sample Title" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/actionbar_title_image"
+            style="@style/default_smart_toolbar_style"
             android:src="@drawable/ic_close_white_24dp"
-            style="@style/default_smart_toolbar_style" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/actionbar_right_btn"

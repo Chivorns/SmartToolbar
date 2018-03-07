@@ -68,7 +68,7 @@ public class SmartToolbar extends LinearLayout {
     private void init(AttributeSet attrs) {
 
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mMainLayout = inflate(getContext(), R.layout.smart_toolbar, this);
+        mMainLayout = inflate(getContext(), R.layout.smart_toolbar_layout, this);
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SmartToolbar);
         imgLeftBtn = findViewById(R.id.actionbar_left_btn);
