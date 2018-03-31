@@ -36,11 +36,12 @@ public class SmartToolbar extends LinearLayout {
     private int DEFAULT_RIGHT_BUTTON_MARGIN_RIGHT;
 
     private int DEFAULT_TOOLBAR_BACKGROUND;
+    private final String DEFAULT_TITLE_TEXT = "SampleTitleText";
 
     private Drawable leftBtnIcon;
     private Drawable rightBtnIcon;
     private Drawable titleIcon;
-    private String titleText = "SampleTitleText";
+    private String titleText;
 
     public SmartToolbar(Context context) {
         this(context, null);
@@ -68,7 +69,7 @@ public class SmartToolbar extends LinearLayout {
     private void init(AttributeSet attrs) {
 
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mMainLayout = inflate(getContext(), R.layout.smart_toolbar, this);
+        mMainLayout = inflate(getContext(), R.layout.smart_toolbar_layout, this);
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SmartToolbar);
         imgLeftBtn = findViewById(R.id.actionbar_left_btn);
@@ -98,7 +99,7 @@ public class SmartToolbar extends LinearLayout {
 
         String titleText = typedArray.getString(R.styleable.SmartToolbar_smtb_titleText);
         if (titleText == null)
-            titleText = this.titleText;
+            titleText = DEFAULT_TITLE_TEXT;
         this.txtTitleText.setText(titleText);
         this.txtTitleText.setTextColor(typedArray.getInt(R.styleable.SmartToolbar_smtb_titleColor, DEFAULT_TITLE_BAR_COLOR));
 
@@ -121,5 +122,10 @@ public class SmartToolbar extends LinearLayout {
 
     public void setOnRightButtonClickListener(OnClickListener listener) {
         imgRightBtn.setOnClickListener(listener);
+    }
+
+    public void setTitleText(String titleText) {
+        this.titleText = titleText;
+        this.txtTitleText.setText(titleText);
     }
 }
