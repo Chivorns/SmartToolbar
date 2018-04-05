@@ -14,4 +14,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SmartToolbarLeftRightButtonStyle">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:layout_width">50dp</item>
+    </style>
+
 </resources>

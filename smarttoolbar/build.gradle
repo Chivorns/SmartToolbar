@@ -5,7 +5,7 @@ ext {
     LIBRARY_NAME = 'SmartToolbar'
     PUBLISH_GROUP_ID = 'com.github.chivorns'
     PUBLISH_ARTIFACT_ID = LIBRARY_NAME.toLowerCase()
-    PUBLISH_VERSION = '1.0.1'
+    PUBLISH_VERSION = '1.0.2'
 
     // Bintray
     BINTRAY_REPO = 'maven'
@@ -13,7 +13,7 @@ ext {
 
     // Github
     GIT_REPO_URL = 'https://github.com/Chivorns/SmartToolbar'
-    GIT_VCS_URL  = GIT_REPO_URL + '.git'
+    GIT_VCS_URL = GIT_REPO_URL + '.git'
     GIT_USER_REPO_NAME = 'Chivorns/SmartToolbar'
 
     // Developer Info
@@ -28,13 +28,13 @@ ext {
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion compileSdk_version
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion minSdk_version
+        targetSdkVersion compileSdk_version
+        versionCode 2
+        versionName "$PUBLISH_VERSION"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -51,12 +51,14 @@ android {
             }
         }
     }
-
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

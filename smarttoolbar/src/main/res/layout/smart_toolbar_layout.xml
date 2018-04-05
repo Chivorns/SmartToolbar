@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    android:id="@+id/smtb_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#28a6a9">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -10,10 +11,8 @@
 
         <ImageView
             android:id="@+id/actionbar_left_btn"
-            android:layout_width="wrap_content"
+            style="@style/SmartToolbarLeftRightButtonStyle"
             android:layout_height="match_parent"
-            android:paddingLeft="15dp"
-            android:paddingRight="20dp"
             android:src="@drawable/ic_arrow_back_white_24dp" />
 
         <TextView
@@ -29,10 +28,9 @@
 
         <ImageView
             android:id="@+id/actionbar_right_btn"
-            android:layout_width="wrap_content"
+            style="@style/SmartToolbarLeftRightButtonStyle"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:paddingRight="15dp"
             android:src="@drawable/ic_close_white_24dp" />
     </FrameLayout>
 

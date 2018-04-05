@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,23 +20,25 @@ import android.widget.TextView;
 
 public class SmartToolbar extends LinearLayout {
     private View mMainLayout;
+    private LinearLayout smartToolbarLayout;
 
     private ImageView imgLeftBtn;
     private ImageView imgRightBtn;
     private ImageView imgTitleIcon;
     private TextView txtTitleText;
 
-    private boolean DEFAULT_SHOW_LEFT_BUTTON = true;
-    private boolean DEFAULT_SHOW_RIGHT_BUTTON = true;
-    private int DEFAULT_TITLE_BAR_COLOR = Color.WHITE;
+    private final boolean DEFAULT_SHOW_LEFT_BUTTON = true;
+    private final boolean DEFAULT_SHOW_RIGHT_BUTTON = true;
 
-    private int DEFAULT_LEFT_BUTTON_MARGIN_LEFT;
-    private int DEFAULT_LEFT_BUTTON_MARGIN_RIGHT;
+    private final int DEFAULT_TOOLBAR_BACKGROUND = Color.parseColor("#3F51B5");
+    private final int DEFAULT_TITLE_TEXT_COLOR = Color.WHITE;
 
-    private int DEFAULT_RIGHT_BUTTON_MARGIN_LEFT;
-    private int DEFAULT_RIGHT_BUTTON_MARGIN_RIGHT;
+    private final int DEFAULT_LEFT_BUTTON_MARGIN_LEFT = 0;
+    private final int DEFAULT_LEFT_BUTTON_MARGIN_RIGHT = 0;
 
-    private int DEFAULT_TOOLBAR_BACKGROUND;
+    private final int DEFAULT_RIGHT_BUTTON_MARGIN_LEFT = 0;
+    private final int DEFAULT_RIGHT_BUTTON_MARGIN_RIGHT = 0;
+
     private final String DEFAULT_TITLE_TEXT = "SampleTitleText";
 
     private Drawable leftBtnIcon;
@@ -67,52 +70,133 @@ public class SmartToolbar extends LinearLayout {
     }
 
     private void init(AttributeSet attrs) {
-
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMainLayout = inflate(getContext(), R.layout.smart_toolbar_layout, this);
 
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SmartToolbar);
+        smartToolbarLayout = findViewById(R.id.smtb_container);
         imgLeftBtn = findViewById(R.id.actionbar_left_btn);
         imgRightBtn = findViewById(R.id.actionbar_right_btn);
         txtTitleText = findViewById(R.id.actionbar_title);
         imgTitleIcon = findViewById(R.id.actionbar_title_image);
 
-        boolean isShowLeft = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showLeftBtn, DEFAULT_SHOW_LEFT_BUTTON);
-        if (!isShowLeft) {
-            imgLeftBtn.setVisibility(GONE);
-        }
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SmartToolbar);
 
-        Drawable newLeftIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_leftBtnIcon);
-        if (newLeftIcon != null)
-            leftBtnIcon = newLeftIcon;
-        imgLeftBtn.setImageDrawable(leftBtnIcon);
+        boolean isShowLeftBtn = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showLeftBtn, DEFAULT_SHOW_LEFT_BUTTON);
+        setShowLeftButton(isShowLeftBtn);
 
-        boolean isShowRight = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showRightBtn, DEFAULT_SHOW_RIGHT_BUTTON);
-        if (!isShowRight) {
-            imgRightBtn.setVisibility(GONE);
-        }
+        Drawable leftBtnIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_leftBtnIcon);
+        setLeftButtonIcon(leftBtnIcon);
 
-        Drawable newRightIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_rightBtnIcon);
-        if (newRightIcon != null)
-            rightBtnIcon = newRightIcon;
-        imgRightBtn.setImageDrawable(rightBtnIcon);
+        boolean isShowRightBtn = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showRightBtn, DEFAULT_SHOW_RIGHT_BUTTON);
+        setShowRightButton(isShowRightBtn);
+
+        Drawable rightBtnIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_rightBtnIcon);
+        setRightButtonIcon(rightBtnIcon);
 
         String titleText = typedArray.getString(R.styleable.SmartToolbar_smtb_titleText);
-        if (titleText == null)
-            titleText = DEFAULT_TITLE_TEXT;
-        this.txtTitleText.setText(titleText);
-        this.txtTitleText.setTextColor(typedArray.getInt(R.styleable.SmartToolbar_smtb_titleColor, DEFAULT_TITLE_BAR_COLOR));
+        setTitleText(titleText);
 
-        boolean isShowTitleImage = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showTitleImage, false);
+        int titleColor = typedArray.getInt(R.styleable.SmartToolbar_smtb_titleColor, DEFAULT_TITLE_TEXT_COLOR);
+        setTitleTextColor(titleColor);
 
-        if (isShowTitleImage) {
-            this.txtTitleText.setVisibility(GONE);
+        boolean isShowTitleIcon = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showTitleIcon, false);
+        setShowTitleIcon(isShowTitleIcon);
+
+        Drawable titleIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_titleIcon);
+        setTitleIcon(titleIcon);
+
+        if (isTypeReference(typedArray, R.styleable.SmartToolbar_smtb_background)) {
+            Drawable drawable = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_background);
+            setBackground(drawable);
+        } else {
+            int smtbBackgroundColor = typedArray.getColor(R.styleable.SmartToolbar_smtb_background, DEFAULT_TOOLBAR_BACKGROUND);
+            setBackgroundColor(smtbBackgroundColor);
+        }
+
+        typedArray.recycle();
+    }
+
+    private boolean isTypeReference(TypedArray typedArray, int res) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            int type = typedArray.getType(res);
+            return type == 3;
+        }
+        return false;
+    }
+
+    private void setViewVisibility(View view, boolean status) {
+        if (status) {
+            view.setVisibility(VISIBLE);
+        } else {
+            view.setVisibility(GONE);
+        }
+    }
+
+    public void setShowLeftButton(boolean isShowLeftBtn) {
+        setViewVisibility(imgLeftBtn, isShowLeftBtn);
+    }
+
+    public void setLeftButtonIcon(Drawable leftBtnIcon) {
+        if (leftBtnIcon != null) {
+            this.leftBtnIcon = leftBtnIcon;
+            imgLeftBtn.setImageDrawable(leftBtnIcon);
+        }
+    }
+
+    public void setShowRightButton(boolean isShowRightBtn) {
+        setViewVisibility(imgRightBtn, isShowRightBtn);
+    }
+
+    public void setRightButtonIcon(Drawable rightBtnIcon) {
+        if (rightBtnIcon != null) {
+            this.rightBtnIcon = rightBtnIcon;
+            imgRightBtn.setImageDrawable(rightBtnIcon);
+        }
+    }
+
+    public void setTitleText(String titleText) {
+        if (titleText != null) {
+            this.titleText = titleText;
+            this.txtTitleText.setText(titleText);
+        } else {
+            this.txtTitleText.setText(DEFAULT_TITLE_TEXT);
+        }
+    }
+
+    public void setTitleTextColor(int color) {
+        if (color != 0)
+            this.txtTitleText.setTextColor(color);
+        else
+            this.txtTitleText.setTextColor(DEFAULT_TITLE_TEXT_COLOR);
+    }
+
+    public void setShowTitleIcon(boolean isShowTitleIcon) {
+        if (isShowTitleIcon) {
+            txtTitleText.setVisibility(GONE);
             imgTitleIcon.setVisibility(VISIBLE);
+        } else {
+            txtTitleText.setVisibility(VISIBLE);
+            imgTitleIcon.setVisibility(GONE);
+        }
+    }
 
-            Drawable newTitleIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_titleIcon);
-            if (newTitleIcon != null)
-                titleIcon = newTitleIcon;
+    public void setTitleIcon(Drawable titleIcon) {
+        if (titleIcon != null) {
+            this.titleIcon = titleIcon;
             imgTitleIcon.setImageDrawable(titleIcon);
+        } else {
+            imgTitleIcon.setImageDrawable(titleIcon);
+        }
+    }
+
+    public void setBackgroundColor(int color) {
+        smartToolbarLayout.setBackgroundColor(color);
+    }
+
+
+    public void setBackground(Drawable background) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            smartToolbarLayout.setBackground(background);
         }
     }
 
@@ -122,10 +206,5 @@ public class SmartToolbar extends LinearLayout {
 
     public void setOnRightButtonClickListener(OnClickListener listener) {
         imgRightBtn.setOnClickListener(listener);
-    }
-
-    public void setTitleText(String titleText) {
-        this.titleText = titleText;
-        this.txtTitleText.setText(titleText);
     }
 }
