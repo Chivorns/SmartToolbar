@@ -1,4 +1,16 @@
 # SmartToolbar
+[ ![Download](https://api.bintray.com/packages/chivorn/maven/smarttoolbar/images/download.svg) ](https://bintray.com/chivorn/maven/smarttoolbar/_latestVersion)
+
+Customize your toolbar with beautiful style for your Android project
+## Functionalities support
+- Support center titleText and titleIcon
+- Support change left and right button icon
+- Support change background with color code and drawable with image, normal selector and gradient
+- Support change visibility of left button , right button and title icon
+- Support using with CoordinatorLayout to handle scroll event
+- Automatically hide original actionbar
+- No need to call showing method
+- Easy to use
 ## Usage
 ### 1. Add the dependencies to your gradle file:
 
