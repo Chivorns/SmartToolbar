@@ -9,6 +9,6 @@
         <attr name="smtb_titleColor" format="color" />
         <attr name="smtb_showTitleIcon" format="boolean" />
         <attr name="smtb_titleIcon" format="reference" />
-        <attr name="smtb_background" format="reference|color" />
+        <attr name="android:background" format="reference|color" />
     </declare-styleable>
 </resources>

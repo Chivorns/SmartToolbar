@@ -105,11 +105,11 @@ public class SmartToolbar extends LinearLayout {
         Drawable titleIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_titleIcon);
         setTitleIcon(titleIcon);
 
-        if (isTypeReference(typedArray, R.styleable.SmartToolbar_smtb_background)) {
-            Drawable drawable = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_background);
+        if (isTypeReference(typedArray, R.styleable.SmartToolbar_android_background)) {
+            Drawable drawable = typedArray.getDrawable(R.styleable.SmartToolbar_android_background);
             setBackground(drawable);
         } else {
-            int smtbBackgroundColor = typedArray.getColor(R.styleable.SmartToolbar_smtb_background, DEFAULT_TOOLBAR_BACKGROUND);
+            int smtbBackgroundColor = typedArray.getColor(R.styleable.SmartToolbar_android_background, DEFAULT_TOOLBAR_BACKGROUND);
             setBackgroundColor(smtbBackgroundColor);
         }
 
@@ -189,14 +189,17 @@ public class SmartToolbar extends LinearLayout {
         }
     }
 
+    @Override
     public void setBackgroundColor(int color) {
         smartToolbarLayout.setBackgroundColor(color);
     }
 
-
+    @Override
     public void setBackground(Drawable background) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            smartToolbarLayout.setBackground(background);
+        if (smartToolbarLayout != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                smartToolbarLayout.setBackground(background);
+            }
         }
     }
 

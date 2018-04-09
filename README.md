@@ -16,7 +16,7 @@ Customize your toolbar with beautiful style for your Android project
 
 ```gradle
 dependencies {
-    implementation 'com.github.chivorns:smarttoolbar:1.0.2'
+    implementation 'com.github.chivorns:smarttoolbar:1.0.3'
 }
 ```
 
@@ -36,7 +36,7 @@ dependencies {
 <com.chivorn.smarttoolbar.SmartToolbar
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    app:smtb_background="@color/colorPrimary"
+    android:background="@color/colorPrimary"
     app:smtb_leftBtnIcon="@drawable/ic_arrow_back_white_24dp"
     app:smtb_rightBtnIcon="@drawable/ic_close_white_24dp"
     app:smtb_showLeftBtn="true"
