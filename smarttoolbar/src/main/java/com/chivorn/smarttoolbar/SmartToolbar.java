@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -52,9 +53,9 @@ public class SmartToolbar extends LinearLayout {
 
     public SmartToolbar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        leftBtnIcon = context.getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-        rightBtnIcon = context.getResources().getDrawable(R.drawable.ic_close_white_24dp);
-        titleIcon = context.getResources().getDrawable(R.drawable.ic_close_white_24dp);
+        leftBtnIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back_white_24dp, null);
+        rightBtnIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close_white_24dp, null);
+        titleIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close_white_24dp, null);
         hideActionBar(context);
         init(attrs);
     }
@@ -183,8 +184,6 @@ public class SmartToolbar extends LinearLayout {
     public void setTitleIcon(Drawable titleIcon) {
         if (titleIcon != null) {
             this.titleIcon = titleIcon;
-            imgTitleIcon.setImageDrawable(titleIcon);
-        } else {
             imgTitleIcon.setImageDrawable(titleIcon);
         }
     }
