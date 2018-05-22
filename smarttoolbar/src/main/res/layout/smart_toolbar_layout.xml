@@ -3,13 +3,20 @@
     android:id="@+id/smtb_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#28a6a9">
+    android:background="#28a6a9"
+    android:orientation="vertical">
+
+    <View
+        android:visibility="gone"
+        android:id="@+id/smtb_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+    <ImageView
             android:id="@+id/actionbar_left_btn"
             style="@style/SmartToolbarLeftRightButtonStyle"
             android:layout_height="match_parent"
@@ -33,5 +40,4 @@
             android:layout_gravity="right"
             android:src="@drawable/ic_close_white_24dp" />
     </FrameLayout>
-
 </LinearLayout>

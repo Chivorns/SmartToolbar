@@ -16,7 +16,7 @@ Customize your toolbar with beautiful style for your Android project
 
 ```gradle
 dependencies {
-    implementation 'com.github.chivorns:smarttoolbar:1.0.4'
+    implementation 'com.github.chivorns:smarttoolbar:1.0.5'
 }
 ```
 
@@ -83,6 +83,17 @@ dependencies {
 // TODO: setIcon to left and right button
    smartToolbar.setLeftButtonIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp));
    smartToolbar.setRightButtonIcon(getResources().getDrawable(R.drawable.ic_close_white_24dp));
+```
+
+```java
+ // TODO: show custom status bar
+    smartToolbar.showCustomStatusBar(this);
+```
+
+```java
+  // TODO: set status bar color
+  // smartToolbar.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient));
+  // smartToolbar.setStatusBarColor(Color.BLUE);
 ```
 
 #### 3.2 Using Kotlin

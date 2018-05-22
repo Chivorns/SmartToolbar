@@ -2,6 +2,7 @@ package com.chivorn.smarttoolbar;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -11,6 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +27,8 @@ import android.widget.TextView;
 public class SmartToolbar extends LinearLayout {
     private View mMainLayout;
     private LinearLayout smartToolbarLayout;
+    private ViewGroup.LayoutParams mMainLayoutParams;
+    private View vStatusBar;
 
     private ImageView imgLeftBtn;
     private ImageView imgRightBtn;
@@ -40,12 +47,20 @@ public class SmartToolbar extends LinearLayout {
     private final int DEFAULT_RIGHT_BUTTON_MARGIN_LEFT = 0;
     private final int DEFAULT_RIGHT_BUTTON_MARGIN_RIGHT = 0;
 
+    private final int DEFAULT_STATUS_BAR_HEIGHT = 25;
+
     private final String DEFAULT_TITLE_TEXT = "SampleTitleText";
 
     private Drawable leftBtnIcon;
     private Drawable rightBtnIcon;
     private Drawable titleIcon;
     private String titleText;
+
+    private int toolbarBackgroundColor;
+    private Drawable toolbarBackgroundDrawable;
+    private boolean isToolbarColorTypeDrawalbe;
+    private boolean isStatusBarHasOwnColor;
+    private boolean isInitializing = true;
 
     public SmartToolbar(Context context) {
         this(context, null);
@@ -73,7 +88,7 @@ public class SmartToolbar extends LinearLayout {
     private void init(AttributeSet attrs) {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMainLayout = inflate(getContext(), R.layout.smart_toolbar_layout, this);
-
+        vStatusBar = findViewById(R.id.smtb_status_bar);
         smartToolbarLayout = findViewById(R.id.smtb_container);
         imgLeftBtn = findViewById(R.id.actionbar_left_btn);
         imgRightBtn = findViewById(R.id.actionbar_right_btn);
@@ -106,14 +121,10 @@ public class SmartToolbar extends LinearLayout {
         Drawable titleIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_titleIcon);
         setTitleIcon(titleIcon);
 
-        if (isTypeReference(typedArray, R.styleable.SmartToolbar_android_background)) {
-            Drawable drawable = typedArray.getDrawable(R.styleable.SmartToolbar_android_background);
-            setBackground(drawable);
-        } else {
-            int smtbBackgroundColor = typedArray.getColor(R.styleable.SmartToolbar_android_background, DEFAULT_TOOLBAR_BACKGROUND);
-            setBackgroundColor(smtbBackgroundColor);
-        }
+        initBackground(typedArray);
+        initStatusBarColor(typedArray);
 
+        isInitializing = false;
         typedArray.recycle();
     }
 
@@ -190,14 +201,84 @@ public class SmartToolbar extends LinearLayout {
 
     @Override
     public void setBackgroundColor(int color) {
+        toolbarBackgroundColor = color;
         smartToolbarLayout.setBackgroundColor(color);
+        if (!isStatusBarHasOwnColor && !isInitializing)
+            setStatusBarColor(color);
     }
 
     @Override
     public void setBackground(Drawable background) {
         if (smartToolbarLayout != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                toolbarBackgroundDrawable = background;
                 smartToolbarLayout.setBackground(background);
+                if (!isStatusBarHasOwnColor && !isInitializing)
+                    setStatusBarColor(background);
+            }
+        }
+    }
+
+    private void initBackground(TypedArray typedArray) {
+        if (isTypeReference(typedArray, R.styleable.SmartToolbar_android_background)) {
+            isToolbarColorTypeDrawalbe = true;
+            toolbarBackgroundDrawable = typedArray.getDrawable(R.styleable.SmartToolbar_android_background);
+            setBackground(toolbarBackgroundDrawable);
+        } else {
+            isToolbarColorTypeDrawalbe = false;
+            toolbarBackgroundColor = typedArray.getColor(R.styleable.SmartToolbar_android_background, DEFAULT_TOOLBAR_BACKGROUND);
+            setBackgroundColor(toolbarBackgroundColor);
+        }
+    }
+
+    public void setStatusBarColor(int color) {
+        isStatusBarHasOwnColor = true;
+        vStatusBar.setBackgroundColor(color);
+    }
+
+    public void setStatusBarColor(Drawable color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            isStatusBarHasOwnColor = true;
+            vStatusBar.setBackground(color);
+        }
+    }
+
+    private void initStatusBarColor(TypedArray typedArray) {
+        if (isTypeReference(typedArray, R.styleable.SmartToolbar_smtb_statusBarColor)) {
+            Drawable colorDrawable = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_statusBarColor);
+            setStatusBarColor(colorDrawable);
+        } else {
+            if (isToolbarColorTypeDrawalbe) {
+                setStatusBarColor(toolbarBackgroundDrawable);
+                isStatusBarHasOwnColor = false;
+            } else {
+                int color = typedArray.getColor(R.styleable.SmartToolbar_smtb_statusBarColor, toolbarBackgroundColor);
+                setStatusBarColor(color);
+            }
+        }
+    }
+
+    public void showCustomStatusBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = activity.getWindow();
+            w.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+            vStatusBar.setVisibility(VISIBLE);
+            mMainLayoutParams = mMainLayout.getLayoutParams();
+            ViewTreeObserver viewTreeObserver = mMainLayout.getViewTreeObserver();
+            if (viewTreeObserver.isAlive()) {
+                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            mMainLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        }
+                        mMainLayoutParams.height = mMainLayout.getHeight() + dpToPx(DEFAULT_STATUS_BAR_HEIGHT);
+                        mMainLayout.setLayoutParams(mMainLayoutParams);
+                        invalidate();
+                    }
+                });
             }
         }
     }
@@ -208,5 +289,13 @@ public class SmartToolbar extends LinearLayout {
 
     public void setOnRightButtonClickListener(OnClickListener listener) {
         imgRightBtn.setOnClickListener(listener);
+    }
+
+    private int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    private int pxToDp(int px) {
+        return (int) (px / Resources.getSystem().getDisplayMetrics().density);
     }
 }

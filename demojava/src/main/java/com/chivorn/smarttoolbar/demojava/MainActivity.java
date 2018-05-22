@@ -39,5 +39,16 @@ public class MainActivity extends AppCompatActivity {
         // TODO: setIcon to left and right button
         // smartToolbar.setLeftButtonIcon(getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp));
         // smartToolbar.setRightButtonIcon(getResources().getDrawable(R.drawable.ic_close_white_24dp));
+
+        // TODO: set background color
+        // smartToolbar.setBackground(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient));
+        // smartToolbar.setBackgroundColor(Color.BLUE);
+
+        // TODO: show custom status bar
+        smartToolbar.showCustomStatusBar(this);
+
+        // TODO: set status bar color
+        // smartToolbar.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient));
+        // smartToolbar.setStatusBarColor(Color.BLUE);
     }
 }
