@@ -16,7 +16,7 @@ Customize your toolbar with beautiful style for your Android project
 
 ```gradle
 dependencies {
-    implementation 'com.github.chivorns:smarttoolbar:1.0.5'
+    implementation 'com.github.chivorns:smarttoolbar:1.0.6'
 }
 ```
 
@@ -44,7 +44,8 @@ dependencies {
     app:smtb_showTitleIcon="false"
     app:smtb_titleColor="#f1ecec"
     app:smtb_titleIcon="@drawable/title_icon"
-    app:smtb_titleText="Sample Title Text" />
+    app:smtb_titleText="Sample Title Text" 
+    app:smtb_statusBarColor="@drawable/smart_toolbar_bg_gradient" />
 ```
 
 ### 3. Update at runtime
@@ -92,8 +93,8 @@ dependencies {
 
 ```java
   // TODO: set status bar color
-  // smartToolbar.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient));
-  // smartToolbar.setStatusBarColor(Color.BLUE);
+   smartToolbar.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient)); // or
+   smartToolbar.setStatusBarColor(Color.BLUE);
 ```
 
 #### 3.2 Using Kotlin

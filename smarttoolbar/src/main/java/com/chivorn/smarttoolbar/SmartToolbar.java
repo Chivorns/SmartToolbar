@@ -28,6 +28,7 @@ public class SmartToolbar extends LinearLayout {
     private View mMainLayout;
     private LinearLayout smartToolbarLayout;
     private ViewGroup.LayoutParams mMainLayoutParams;
+    private ViewGroup.LayoutParams smtbLayoutParams;
     private View vStatusBar;
 
     private ImageView imgLeftBtn;
@@ -61,6 +62,7 @@ public class SmartToolbar extends LinearLayout {
     private boolean isToolbarColorTypeDrawalbe;
     private boolean isStatusBarHasOwnColor;
     private boolean isInitializing = true;
+    private int layoutHeight;
 
     public SmartToolbar(Context context) {
         this(context, null);
@@ -260,12 +262,17 @@ public class SmartToolbar extends LinearLayout {
 
     public void showCustomStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window w = activity.getWindow();
-            w.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-            w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
             vStatusBar.setVisibility(VISIBLE);
+            if (isToolbarColorTypeDrawalbe) {
+                setStatusBarColor(DEFAULT_TOOLBAR_BACKGROUND);
+            }
+
             mMainLayoutParams = mMainLayout.getLayoutParams();
+            smtbLayoutParams = smartToolbarLayout.getLayoutParams();
+
             ViewTreeObserver viewTreeObserver = mMainLayout.getViewTreeObserver();
             if (viewTreeObserver.isAlive()) {
                 viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -274,8 +281,13 @@ public class SmartToolbar extends LinearLayout {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                             mMainLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         }
-                        mMainLayoutParams.height = mMainLayout.getHeight() + dpToPx(DEFAULT_STATUS_BAR_HEIGHT);
+                        layoutHeight = mMainLayout.getMeasuredHeight() + dpToPx(DEFAULT_STATUS_BAR_HEIGHT);
+
+                        mMainLayoutParams.height = layoutHeight;
                         mMainLayout.setLayoutParams(mMainLayoutParams);
+
+                        smtbLayoutParams.height = layoutHeight;
+                        smartToolbarLayout.setLayoutParams(smtbLayoutParams);
                         invalidate();
                     }
                 });
