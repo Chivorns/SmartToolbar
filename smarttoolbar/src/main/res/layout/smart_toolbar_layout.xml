@@ -10,7 +10,7 @@
         android:visibility="gone"
         android:id="@+id/smtb_status_bar"
         android:layout_width="match_parent"
-        android:layout_height="25dp" />
+        android:layout_height="24dp" />
 
     <FrameLayout
         android:layout_width="match_parent"

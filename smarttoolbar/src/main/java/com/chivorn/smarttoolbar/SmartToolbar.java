@@ -48,7 +48,7 @@ public class SmartToolbar extends LinearLayout {
     private final int DEFAULT_RIGHT_BUTTON_MARGIN_LEFT = 0;
     private final int DEFAULT_RIGHT_BUTTON_MARGIN_RIGHT = 0;
 
-    private final int DEFAULT_STATUS_BAR_HEIGHT = 25;
+    private final int DEFAULT_STATUS_BAR_HEIGHT = 24;
 
     private final String DEFAULT_TITLE_TEXT = "SampleTitleText";
 
@@ -59,6 +59,8 @@ public class SmartToolbar extends LinearLayout {
 
     private int toolbarBackgroundColor;
     private Drawable toolbarBackgroundDrawable;
+    private int statusBackgroundColor;
+    private Drawable statusBackgroundDrawable;
     private boolean isToolbarColorTypeDrawalbe;
     private boolean isStatusBarHasOwnColor;
     private boolean isInitializing = true;
@@ -203,7 +205,8 @@ public class SmartToolbar extends LinearLayout {
 
     @Override
     public void setBackgroundColor(int color) {
-        toolbarBackgroundColor = color;
+        if (!isInitializing)
+            toolbarBackgroundColor = color;
         smartToolbarLayout.setBackgroundColor(color);
         if (!isStatusBarHasOwnColor && !isInitializing)
             setStatusBarColor(color);
@@ -213,7 +216,8 @@ public class SmartToolbar extends LinearLayout {
     public void setBackground(Drawable background) {
         if (smartToolbarLayout != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                toolbarBackgroundDrawable = background;
+                if (!isInitializing)
+                    toolbarBackgroundDrawable = background;
                 smartToolbarLayout.setBackground(background);
                 if (!isStatusBarHasOwnColor && !isInitializing)
                     setStatusBarColor(background);
@@ -234,28 +238,38 @@ public class SmartToolbar extends LinearLayout {
     }
 
     public void setStatusBarColor(int color) {
-        isStatusBarHasOwnColor = true;
+        if (!isInitializing) {
+            statusBackgroundColor = color;
+            isStatusBarHasOwnColor = true;
+        }
         vStatusBar.setBackgroundColor(color);
     }
 
     public void setStatusBarColor(Drawable color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            isStatusBarHasOwnColor = true;
+            if (!isInitializing) {
+                statusBackgroundDrawable = color;
+                isStatusBarHasOwnColor = true;
+            }
             vStatusBar.setBackground(color);
         }
     }
 
     private void initStatusBarColor(TypedArray typedArray) {
         if (isTypeReference(typedArray, R.styleable.SmartToolbar_smtb_statusBarColor)) {
-            Drawable colorDrawable = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_statusBarColor);
-            setStatusBarColor(colorDrawable);
+            isStatusBarHasOwnColor = true;
+            statusBackgroundDrawable = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_statusBarColor);
+            setStatusBarColor(statusBackgroundDrawable);
         } else {
-            if (isToolbarColorTypeDrawalbe) {
-                setStatusBarColor(toolbarBackgroundDrawable);
-                isStatusBarHasOwnColor = false;
+            statusBackgroundColor = typedArray.getColor(R.styleable.SmartToolbar_smtb_statusBarColor, toolbarBackgroundColor);
+            if (statusBackgroundColor != toolbarBackgroundColor) {
+                isStatusBarHasOwnColor = true;
+                setStatusBarColor(statusBackgroundColor);
             } else {
-                int color = typedArray.getColor(R.styleable.SmartToolbar_smtb_statusBarColor, toolbarBackgroundColor);
-                setStatusBarColor(color);
+                isStatusBarHasOwnColor = false;
+                if (isToolbarColorTypeDrawalbe) {
+                    setStatusBarColor(toolbarBackgroundDrawable);
+                }
             }
         }
     }
@@ -266,7 +280,7 @@ public class SmartToolbar extends LinearLayout {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
             vStatusBar.setVisibility(VISIBLE);
-            if (isToolbarColorTypeDrawalbe) {
+            if (!isStatusBarHasOwnColor && isToolbarColorTypeDrawalbe) {
                 setStatusBarColor(DEFAULT_TOOLBAR_BACKGROUND);
             }
 

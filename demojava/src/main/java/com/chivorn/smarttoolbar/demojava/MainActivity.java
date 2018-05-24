@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         smartToolbar.showCustomStatusBar(this);
 
         // TODO: set status bar color
-        smartToolbar.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient));
+        // smartToolbar.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient));
         // smartToolbar.setStatusBarColor(Color.BLUE);
     }
 }
