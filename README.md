@@ -16,7 +16,7 @@ Customize your toolbar with beautiful style for your Android project
 
 ```gradle
 dependencies {
-    implementation 'com.github.chivorns:smarttoolbar:1.0.6'
+    implementation 'com.github.chivorns:smarttoolbar:1.0.7'
 }
 ```
 
