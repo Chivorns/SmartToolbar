@@ -105,14 +105,16 @@ public class SmartToolbar extends LinearLayout {
         boolean isShowLeftBtn = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showLeftBtn, DEFAULT_SHOW_LEFT_BUTTON);
         setShowLeftButton(isShowLeftBtn);
 
-        Drawable leftBtnIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_leftBtnIcon);
-        setLeftButtonIcon(leftBtnIcon);
+        int leftBtnIconResId = typedArray.getResourceId(R.styleable.SmartToolbar_smtb_leftBtnIcon, DEFAULT_ERROR_NUM);
+        if (leftBtnIconResId > DEFAULT_ERROR_NUM)
+            setLeftButtonIcon(AppCompatResources.getDrawable(getContext(), leftBtnIconResId));
 
         boolean isShowRightBtn = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showRightBtn, DEFAULT_SHOW_RIGHT_BUTTON);
         setShowRightButton(isShowRightBtn);
 
-        Drawable rightBtnIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_rightBtnIcon);
-        setRightButtonIcon(rightBtnIcon);
+        int rightBtnIconResId = typedArray.getResourceId(R.styleable.SmartToolbar_smtb_rightBtnIcon, DEFAULT_ERROR_NUM);
+        if (rightBtnIconResId > DEFAULT_ERROR_NUM)
+            setRightButtonIcon(AppCompatResources.getDrawable(getContext(), rightBtnIconResId));
 
         String titleText = typedArray.getString(R.styleable.SmartToolbar_smtb_titleText);
         setTitleText(titleText);
@@ -123,8 +125,9 @@ public class SmartToolbar extends LinearLayout {
         boolean isShowTitleIcon = typedArray.getBoolean(R.styleable.SmartToolbar_smtb_showTitleIcon, false);
         setShowTitleIcon(isShowTitleIcon);
 
-        Drawable titleIcon = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_titleIcon);
-        setTitleIcon(titleIcon);
+        int titleIconResId = typedArray.getResourceId(R.styleable.SmartToolbar_smtb_titleIcon, DEFAULT_ERROR_NUM);
+        if (titleIconResId > DEFAULT_ERROR_NUM)
+            setTitleIcon(AppCompatResources.getDrawable(getContext(), titleIconResId));
 
         initBackground(typedArray);
         initStatusBarColor(typedArray);
