@@ -7,8 +7,8 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +47,7 @@ public class SmartToolbar extends LinearLayout {
 
     private final int DEFAULT_RIGHT_BUTTON_MARGIN_LEFT = 0;
     private final int DEFAULT_RIGHT_BUTTON_MARGIN_RIGHT = 0;
+    private final int DEFAULT_ERROR_NUM = -1;
 
     private final int DEFAULT_STATUS_BAR_HEIGHT = 24;
 
@@ -72,9 +73,9 @@ public class SmartToolbar extends LinearLayout {
 
     public SmartToolbar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        leftBtnIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back_white_24dp, null);
-        rightBtnIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close_white_24dp, null);
-        titleIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_close_white_24dp, null);
+        leftBtnIcon = AppCompatResources.getDrawable(context, R.drawable.ic_arrow_back_white_24dp);
+        rightBtnIcon = AppCompatResources.getDrawable(context, R.drawable.ic_close_white_24dp);
+        titleIcon = AppCompatResources.getDrawable(context, R.drawable.ic_close_white_24dp);
         hideActionBar(context);
         init(attrs);
     }
@@ -226,9 +227,10 @@ public class SmartToolbar extends LinearLayout {
     }
 
     private void initBackground(TypedArray typedArray) {
-        if (isTypeReference(typedArray, R.styleable.SmartToolbar_android_background)) {
+        int drawableResId = typedArray.getResourceId(R.styleable.SmartToolbar_android_background, DEFAULT_ERROR_NUM);
+        if (drawableResId > DEFAULT_ERROR_NUM) {
             isToolbarColorTypeDrawalbe = true;
-            toolbarBackgroundDrawable = typedArray.getDrawable(R.styleable.SmartToolbar_android_background);
+            toolbarBackgroundDrawable = AppCompatResources.getDrawable(getContext(), drawableResId);
             setBackground(toolbarBackgroundDrawable);
         } else {
             isToolbarColorTypeDrawalbe = false;
@@ -256,9 +258,10 @@ public class SmartToolbar extends LinearLayout {
     }
 
     private void initStatusBarColor(TypedArray typedArray) {
-        if (isTypeReference(typedArray, R.styleable.SmartToolbar_smtb_statusBarColor)) {
+        int drawableResId = typedArray.getResourceId(R.styleable.SmartToolbar_smtb_statusBarColor, DEFAULT_ERROR_NUM);
+        if (drawableResId > DEFAULT_ERROR_NUM) {
             isStatusBarHasOwnColor = true;
-            statusBackgroundDrawable = typedArray.getDrawable(R.styleable.SmartToolbar_smtb_statusBarColor);
+            statusBackgroundDrawable = AppCompatResources.getDrawable(getContext(), drawableResId);
             setStatusBarColor(statusBackgroundDrawable);
         } else {
             statusBackgroundColor = typedArray.getColor(R.styleable.SmartToolbar_smtb_statusBarColor, toolbarBackgroundColor);

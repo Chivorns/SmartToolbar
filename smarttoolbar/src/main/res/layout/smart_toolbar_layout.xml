@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/smtb_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,20 +8,20 @@
     android:orientation="vertical">
 
     <View
-        android:visibility="gone"
         android:id="@+id/smtb_status_bar"
         android:layout_width="match_parent"
-        android:layout_height="24dp" />
+        android:layout_height="24dp"
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ImageView
+        <ImageView
             android:id="@+id/actionbar_left_btn"
             style="@style/SmartToolbarLeftRightButtonStyle"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_arrow_back_white_24dp" />
+            app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
         <TextView
             android:id="@+id/actionbar_title"
@@ -30,14 +31,22 @@
         <ImageView
             android:id="@+id/actionbar_title_image"
             style="@style/default_smart_toolbar_style"
-            android:src="@drawable/ic_close_white_24dp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_close_white_24dp" />
+
+        <!--<ImageView
+            android:id="@+id/actionbar_right_btn1"
+            style="@style/SmartToolbarLeftRightButtonStyle"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginRight="40dp"
+            app:srcCompat="@drawable/ic_notifications_white_24dp" />-->
 
         <ImageView
             android:id="@+id/actionbar_right_btn"
             style="@style/SmartToolbarLeftRightButtonStyle"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:src="@drawable/ic_close_white_24dp" />
+            app:srcCompat="@drawable/ic_search_white_24dp" />
     </FrameLayout>
 </LinearLayout>
