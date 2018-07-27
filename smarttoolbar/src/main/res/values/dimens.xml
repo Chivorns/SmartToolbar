@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_text_size">15sp</dimen>
+    <dimen name="default_icon_width">50dp</dimen>
+    <dimen name="default_icon_height">30dp</dimen>
+    <dimen name="default_icon_padding_start">10dp</dimen>
+    <dimen name="default_icon_padding_end">15dp</dimen>
+</resources>

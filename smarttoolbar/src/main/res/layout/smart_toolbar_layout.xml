@@ -20,12 +20,13 @@
         <ImageView
             android:id="@+id/actionbar_left_btn"
             style="@style/SmartToolbarLeftRightButtonStyle"
-            android:layout_height="match_parent"
+            android:layout_gravity="center|start"
             app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
         <TextView
             android:id="@+id/actionbar_title"
             style="@style/default_smart_toolbar_style"
+            android:gravity="center"
             android:text="Sample Title" />
 
         <ImageView
@@ -45,8 +46,7 @@
         <ImageView
             android:id="@+id/actionbar_right_btn"
             style="@style/SmartToolbarLeftRightButtonStyle"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
+            android:layout_gravity="center|end"
             app:srcCompat="@drawable/ic_search_white_24dp" />
     </FrameLayout>
 </LinearLayout>

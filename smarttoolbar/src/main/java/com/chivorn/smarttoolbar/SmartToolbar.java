@@ -132,6 +132,24 @@ public class SmartToolbar extends LinearLayout {
         initBackground(typedArray);
         initStatusBarColor(typedArray);
 
+        float leftBtnIconWidth = typedArray.getDimension(R.styleable.SmartToolbar_smtb_leftBtnIconWidth, getResources().getDimension(R.dimen.default_icon_width));
+        float leftBtnIconHeight = typedArray.getDimension(R.styleable.SmartToolbar_smtb_leftBtnIconHeight, getResources().getDimension(R.dimen.default_icon_height));
+        updateLayoutWidth(imgLeftBtn, (int) leftBtnIconWidth);
+        updateLayoutHeight(imgLeftBtn, (int) leftBtnIconHeight);
+
+        float rightBtnIconWidth = typedArray.getDimension(R.styleable.SmartToolbar_smtb_rightBtnIconWidth, getResources().getDimension(R.dimen.default_icon_width));
+        float rightBtnIconHeight = typedArray.getDimension(R.styleable.SmartToolbar_smtb_rightBtnIconHeight, getResources().getDimension(R.dimen.default_icon_height));
+        updateLayoutWidth(imgRightBtn, (int) rightBtnIconWidth);
+        updateLayoutHeight(imgRightBtn, (int) rightBtnIconHeight);
+
+        float titleIconWidth = typedArray.getDimension(R.styleable.SmartToolbar_smtb_titleIconWidth, getResources().getDimension(R.dimen.default_icon_width));
+        float titleIconHeight = typedArray.getDimension(R.styleable.SmartToolbar_smtb_titleIconHeight, getResources().getDimension(R.dimen.default_icon_height));
+        updateLayoutWidth(imgTitleIcon, (int) titleIconWidth);
+        updateLayoutHeight(imgTitleIcon, (int) titleIconHeight);
+
+        float titleTextSize = typedArray.getDimension(R.styleable.SmartToolbar_smtb_titleTextSize, getResources().getDimension(R.dimen.default_text_size));
+        setTitleTextSize(pxToDp((int) titleTextSize));
+
         isInitializing = false;
         typedArray.recycle();
     }
@@ -313,6 +331,70 @@ public class SmartToolbar extends LinearLayout {
                 });
             }
         }
+    }
+
+    private void updateLayoutWidth(final View view, final int newWidth) {
+        measureLayout(view, newWidth, 0);
+    }
+
+    private void updateLayoutHeight(final View view, final int newHeight) {
+        measureLayout(view, 0, newHeight);
+    }
+
+    private void measureLayout(final View view, final int newWidth, final int newHeight) {
+        final ViewGroup.LayoutParams params = view.getLayoutParams();
+        ViewTreeObserver viewTreeObserver = view.getViewTreeObserver();
+        if (viewTreeObserver.isAlive()) {
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+
+                    if (newWidth > 0) {
+                        int layoutWidth = newWidth;
+                        params.width = layoutWidth;
+                    }
+
+                    if (newHeight > 0) {
+                        int layoutHeight = newHeight;
+                        params.height = layoutHeight;
+                    }
+
+                    view.setLayoutParams(params);
+                    invalidate();
+                }
+            });
+        }
+    }
+
+    public void setLeftButtonIconWidth(int width) {
+        updateLayoutWidth(imgLeftBtn, dpToPx(width));
+    }
+
+    public void setLeftButtonIconHeight(int height) {
+        updateLayoutHeight(imgLeftBtn, dpToPx(height));
+    }
+
+    public void setRightButtonIconWidth(int width) {
+        updateLayoutWidth(imgRightBtn, dpToPx(width));
+    }
+
+    public void setRightButtonIconHeight(int height) {
+        updateLayoutHeight(imgRightBtn, dpToPx(height));
+    }
+
+    public void setTitleIconWidth(int width) {
+        updateLayoutWidth(imgTitleIcon, dpToPx(width));
+    }
+
+    public void setTitleIconHeight(int height) {
+        updateLayoutHeight(imgTitleIcon, dpToPx(height));
+    }
+
+    public void setTitleTextSize(int textSize) {
+        txtTitleText.setTextSize(textSize);
     }
 
     public void setOnLeftButtonClickListener(OnClickListener listener) {

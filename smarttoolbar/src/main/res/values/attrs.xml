@@ -11,5 +11,12 @@
         <attr name="smtb_titleIcon" format="reference" />
         <attr name="android:background" format="reference|color" />
         <attr name="smtb_statusBarColor" format="reference|color" />
+        <attr name="smtb_leftBtnIconWidth" format="dimension" />
+        <attr name="smtb_leftBtnIconHeight" format="dimension" />
+        <attr name="smtb_rightBtnIconWidth" format="dimension" />
+        <attr name="smtb_rightBtnIconHeight" format="dimension" />
+        <attr name="smtb_titleIconWidth" format="dimension" />
+        <attr name="smtb_titleIconHeight" format="dimension" />
+        <attr name="smtb_titleTextSize" format="dimension" />
     </declare-styleable>
 </resources>

@@ -16,7 +16,7 @@ Customize your toolbar with beautiful style for your Android project
 
 ```gradle
 dependencies {
-    implementation 'com.github.chivorns:smarttoolbar:1.0.9'
+    implementation 'com.github.chivorns:smarttoolbar:1.0.10'
 }
 ```
 
@@ -44,8 +44,15 @@ dependencies {
     app:smtb_showTitleIcon="false"
     app:smtb_titleColor="#f1ecec"
     app:smtb_titleIcon="@drawable/title_icon"
-    app:smtb_titleText="Sample Title Text" 
-    app:smtb_statusBarColor="@drawable/smart_toolbar_bg_gradient" />
+    app:smtb_titleText="Sample Title Text"
+    app:smtb_statusBarColor="@drawable/smart_toolbar_bg_gradient"
+    app:smtb_titleTextSize="15sp"
+    app:smtb_leftBtnIconWidth="50dp"
+    app:smtb_leftBtnIconHeight="30dp"
+    app:smtb_rightBtnIconWidth="50dp"
+    app:smtb_rightBtnIconHeight="30dp"
+    app:smtb_titleIconWidth="50dp"
+    app:smtb_titleIconHeight="30dp"/>
 ```
 
 ### 3. Update at runtime
@@ -87,49 +94,106 @@ dependencies {
 ```
 
 ```java
- // TODO: show custom status bar
-    smartToolbar.showCustomStatusBar(this);
+// TODO: show custom status bar
+   smartToolbar.showCustomStatusBar(this);
 ```
 
 ```java
-  // TODO: set status bar color
+// TODO: set status bar color
    smartToolbar.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient)); // or
    smartToolbar.setStatusBarColor(Color.BLUE);
+```
+
+```java
+// TODO: Set title text size
+   smartToolbar.setTitleTextSize(15);
+```
+
+```java
+// TODO: Set layout width & height for left button
+   smartToolbar.setLeftButtonIconWidth(50);
+   smartToolbar.setLeftButtonIconHeight(30);
+```
+
+```java
+// TODO: Set layout width & height for right button
+   smartToolbar.setRightButtonIconWidth(50);
+   smartToolbar.setRightButtonIconHeight(30);
+```
+
+```java
+// TODO: Set layout width & height for title icon
+   smartToolbar.setTitleIconWidth(50);
+   smartToolbar.setTitleIconHeight(30);
 ```
 
 #### 3.2 Using Kotlin
 
 ```kotlin
 // TODO: setTitleText
-   smartToolbar.setTitleText("New Title Text")
+   smartToolbar?.setTitleText("New Title Text")
 ```
 
 ```kotlin
 // TODO: setTitleTextColor
-   smartToolbar.setTitleTextColor(resources.getColor(R.color.colorAccent)) // or
-   smartToolbar.setTitleTextColor(Color.YELLOW)
+   smartToolbar?.setTitleTextColor(resources.getColor(R.color.colorAccent)) // or
+   smartToolbar?.setTitleTextColor(Color.YELLOW)
 ```
 
 ```kotlin
 // TODO: setShowTitleIcon & setTitleIcon
-   smartToolbar.setShowTitleIcon(true)
-   smartToolbar.setTitleIcon(resources.getDrawable(R.drawable.ic_close_white_24dp))
+   smartToolbar?.setShowTitleIcon(true)
+   smartToolbar?.setTitleIcon(resources.getDrawable(R.drawable.ic_close_white_24dp))
 ```
 
 ```kotlin
 // TODO: setBackgroundColor & setBackgroundDrawable
-   smartToolbar.background = resources.getDrawable(R.drawable.smart_toolbar_bg_gradient) // or
-   smartToolbar.setBackgroundColor(Color.YELLOW)
+   smartToolbar?.background = resources.getDrawable(R.drawable.smart_toolbar_bg_gradient) // or
+   smartToolbar?.setBackgroundColor(Color.YELLOW)
 ```
 
 ```kotlin
 // TODO: setVisibility of left and right button
-   smartToolbar.setShowLeftButton(true)
-   smartToolbar.setShowRightButton(true)
+   smartToolbar?.setShowLeftButton(true)
+   smartToolbar?.setShowRightButton(true)
 ```
 
 ```kotlin
 // TODO: setIcon to left and right button
-   smartToolbar.setLeftButtonIcon(resources.getDrawable(R.drawable.ic_arrow_back_white_24dp))
-   smartToolbar.setRightButtonIcon(resources.getDrawable(R.drawable.ic_close_white_24dp))
+   smartToolbar?.setLeftButtonIcon(resources.getDrawable(R.drawable.ic_arrow_back_white_24dp))
+   smartToolbar?.setRightButtonIcon(resources.getDrawable(R.drawable.ic_close_white_24dp))
+```
+
+```java
+// TODO: show custom status bar
+   smartToolbar?.showCustomStatusBar(this);
+```
+
+```java
+// TODO: set status bar color
+   smartToolbar?.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient)); // or
+   smartToolbar?.setStatusBarColor(Color.BLUE);
+```
+
+```java
+// TODO: Set title text size
+   smartToolbar?.setTitleTextSize(15);
+```
+
+```java
+// TODO: Set layout width & height for left button
+   smartToolbar?.setLeftButtonIconWidth(50);
+   smartToolbar?.setLeftButtonIconHeight(30);
+```
+
+```java
+// TODO: Set layout width & height for right button
+   smartToolbar?.setRightButtonIconWidth(50);
+   smartToolbar?.setRightButtonIconHeight(30);
+```
+
+```java
+// TODO: Set layout width & height for title icon
+   smartToolbar?.setTitleIconWidth(50);
+   smartToolbar?.setTitleIconHeight(30);
 ```

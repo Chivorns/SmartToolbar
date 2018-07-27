@@ -49,5 +49,20 @@ public class MainActivity extends AppCompatActivity {
         // TODO: set status bar color
         // smartToolbar.setStatusBarColor(getResources().getDrawable(R.drawable.smart_toolbar_bg_gradient));
         // smartToolbar.setStatusBarColor(Color.BLUE);
+
+        // TODO: Set title text size
+        // smartToolbar.setTitleTextSize(15);
+
+        // TODO: Set layout width & height for left button
+        // smartToolbar.setLeftButtonIconWidth(50);
+        // smartToolbar.setLeftButtonIconHeight(30);
+
+        // TODO: Set layout width & height for right button
+        // smartToolbar.setRightButtonIconWidth(50);
+        // smartToolbar.setRightButtonIconHeight(30);
+
+        // TODO: Set layout width & height for title icon
+        // smartToolbar.setTitleIconWidth(50);
+        // smartToolbar.setTitleIconHeight(30);
     }
 }

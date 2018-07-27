@@ -2,10 +2,11 @@
 <resources>
 
     <style name="SmartToolbarLeftRightButtonStyle">
-        <item name="android:paddingEnd">15dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">15dp</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:layout_width">50dp</item>
+        <item name="android:paddingEnd">@dimen/default_icon_padding_end</item>
+        <item name="android:paddingLeft">@dimen/default_icon_padding_start</item>
+        <item name="android:paddingRight">@dimen/default_icon_padding_end</item>
+        <item name="android:paddingStart">@dimen/default_icon_padding_start</item>
+        <item name="android:layout_width">@dimen/default_icon_width</item>
+        <item name="android:layout_height">@dimen/default_icon_height</item>
     </style>
 </resources>
