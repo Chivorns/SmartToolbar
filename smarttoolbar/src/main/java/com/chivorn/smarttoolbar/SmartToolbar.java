@@ -333,40 +333,12 @@ public class SmartToolbar extends LinearLayout {
         }
     }
 
-    private void updateLayoutWidth(final View view, final int newWidth) {
-        measureLayout(view, newWidth, 0);
+    private void updateLayoutWidth(View view, int newWidth) {
+        view.getLayoutParams().width = newWidth;
     }
 
-    private void updateLayoutHeight(final View view, final int newHeight) {
-        measureLayout(view, 0, newHeight);
-    }
-
-    private void measureLayout(final View view, final int newWidth, final int newHeight) {
-        final ViewGroup.LayoutParams params = view.getLayoutParams();
-        ViewTreeObserver viewTreeObserver = view.getViewTreeObserver();
-        if (viewTreeObserver.isAlive()) {
-            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
-
-                    if (newWidth > 0) {
-                        int layoutWidth = newWidth;
-                        params.width = layoutWidth;
-                    }
-
-                    if (newHeight > 0) {
-                        int layoutHeight = newHeight;
-                        params.height = layoutHeight;
-                    }
-
-                    view.setLayoutParams(params);
-                    invalidate();
-                }
-            });
-        }
+    private void updateLayoutHeight(View view, int newHeight) {
+        view.getLayoutParams().height = newHeight;
     }
 
     public void setLeftButtonIconWidth(int width) {
