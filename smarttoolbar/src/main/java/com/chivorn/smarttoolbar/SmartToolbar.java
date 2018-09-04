@@ -30,6 +30,7 @@ public class SmartToolbar extends LinearLayout {
     private ViewGroup.LayoutParams mMainLayoutParams;
     private ViewGroup.LayoutParams smtbLayoutParams;
     private View vStatusBar;
+    private View vStatusBar2;
 
     private ImageView imgLeftBtn;
     private ImageView imgRightBtn;
@@ -94,6 +95,7 @@ public class SmartToolbar extends LinearLayout {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMainLayout = inflate(getContext(), R.layout.smart_toolbar_layout, this);
         vStatusBar = findViewById(R.id.smtb_status_bar);
+        vStatusBar2 = inflate(getContext(), R.layout.smtb_status_bar_layout, null);
         smartToolbarLayout = findViewById(R.id.smtb_container);
         imgLeftBtn = findViewById(R.id.actionbar_left_btn);
         imgRightBtn = findViewById(R.id.actionbar_right_btn);
@@ -266,6 +268,7 @@ public class SmartToolbar extends LinearLayout {
             isStatusBarHasOwnColor = true;
         }
         vStatusBar.setBackgroundColor(color);
+        vStatusBar2.setBackgroundColor(color);
     }
 
     public void setStatusBarColor(Drawable color) {
@@ -275,6 +278,7 @@ public class SmartToolbar extends LinearLayout {
                 isStatusBarHasOwnColor = true;
             }
             vStatusBar.setBackground(color);
+            vStatusBar2.setBackground(color);
         }
     }
 
@@ -330,6 +334,10 @@ public class SmartToolbar extends LinearLayout {
                     }
                 });
             }
+
+            final ViewGroup rootView = activity.findViewById(android.R.id.content);
+            // inflate(getContext(), R.layout.smtb_status_bar_layout, rootView);
+            rootView.addView(vStatusBar2, 0);
         }
     }
 
