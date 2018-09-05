@@ -8,6 +8,7 @@ Customize your toolbar with beautiful style for your Android project
 - Support change background with color code and drawable with image, normal selector and gradient
 - Support change visibility of left button , right button and title icon
 - Support using with CoordinatorLayout to handle scroll event
+- Supprot custom status bar with gradient color
 - Automatically hide original actionbar
 - No need to call showing method
 - Easy to use
