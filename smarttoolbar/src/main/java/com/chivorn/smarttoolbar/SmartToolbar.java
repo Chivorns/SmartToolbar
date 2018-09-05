@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +30,9 @@ public class SmartToolbar extends LinearLayout {
     private LinearLayout smartToolbarLayout;
     private ViewGroup.LayoutParams mMainLayoutParams;
     private ViewGroup.LayoutParams smtbLayoutParams;
+    private ViewGroup.LayoutParams statusBarLayoutParams;
+    private ViewGroup activityRootView;
     private View vStatusBar;
-    private View vStatusBar2;
 
     private ImageView imgLeftBtn;
     private ImageView imgRightBtn;
@@ -53,6 +55,7 @@ public class SmartToolbar extends LinearLayout {
     private final int DEFAULT_STATUS_BAR_HEIGHT = 24;
 
     private final String DEFAULT_TITLE_TEXT = "SampleTitleText";
+    private final String TAG = SmartToolbar.class.getSimpleName();
 
     private Drawable leftBtnIcon;
     private Drawable rightBtnIcon;
@@ -94,8 +97,8 @@ public class SmartToolbar extends LinearLayout {
     private void init(AttributeSet attrs) {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMainLayout = inflate(getContext(), R.layout.smart_toolbar_layout, this);
-        vStatusBar = findViewById(R.id.smtb_status_bar);
-        vStatusBar2 = inflate(getContext(), R.layout.smtb_status_bar_layout, null);
+        vStatusBar = inflate(getContext(), R.layout.smtb_status_bar_layout, null);
+        vStatusBar.bringToFront();
         smartToolbarLayout = findViewById(R.id.smtb_container);
         imgLeftBtn = findViewById(R.id.actionbar_left_btn);
         imgRightBtn = findViewById(R.id.actionbar_right_btn);
@@ -268,7 +271,6 @@ public class SmartToolbar extends LinearLayout {
             isStatusBarHasOwnColor = true;
         }
         vStatusBar.setBackgroundColor(color);
-        vStatusBar2.setBackgroundColor(color);
     }
 
     public void setStatusBarColor(Drawable color) {
@@ -278,7 +280,6 @@ public class SmartToolbar extends LinearLayout {
                 isStatusBarHasOwnColor = true;
             }
             vStatusBar.setBackground(color);
-            vStatusBar2.setBackground(color);
         }
     }
 
@@ -307,7 +308,6 @@ public class SmartToolbar extends LinearLayout {
             Window window = activity.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-            vStatusBar.setVisibility(VISIBLE);
             if (!isStatusBarHasOwnColor && isToolbarColorTypeDrawalbe) {
                 setStatusBarColor(DEFAULT_TOOLBAR_BACKGROUND);
             }
@@ -330,14 +330,32 @@ public class SmartToolbar extends LinearLayout {
 
                         smtbLayoutParams.height = layoutHeight;
                         smartToolbarLayout.setLayoutParams(smtbLayoutParams);
+                        smartToolbarLayout.setPadding(smartToolbarLayout.getPaddingLeft(), dpToPx(DEFAULT_STATUS_BAR_HEIGHT), smartToolbarLayout.getPaddingRight(), smartToolbarLayout.getPaddingBottom());
                         invalidate();
                     }
                 });
             }
 
-            final ViewGroup rootView = activity.findViewById(android.R.id.content);
-            // inflate(getContext(), R.layout.smtb_status_bar_layout, rootView);
-            rootView.addView(vStatusBar2, 0);
+            ViewTreeObserver viewTreeObserverStatusBar = vStatusBar.getViewTreeObserver();
+            if (viewTreeObserverStatusBar.isAlive()) {
+                viewTreeObserverStatusBar.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            vStatusBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        }
+                        statusBarLayoutParams = vStatusBar.getLayoutParams();
+                        statusBarLayoutParams.height = dpToPx(DEFAULT_STATUS_BAR_HEIGHT);
+                        vStatusBar.setLayoutParams(statusBarLayoutParams);
+                        invalidate();
+                    }
+                });
+            }
+
+            activityRootView = activity.findViewById(android.R.id.content);
+            activityRootView.addView(vStatusBar);
+        } else {
+            Log.e(TAG, "Custom Status Bar support only for API 19 up");
         }
     }
 

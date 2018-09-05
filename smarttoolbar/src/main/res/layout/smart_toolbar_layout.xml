@@ -7,12 +7,6 @@
     android:background="#28a6a9"
     android:orientation="vertical">
 
-    <View
-        android:id="@+id/smtb_status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:visibility="gone" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
