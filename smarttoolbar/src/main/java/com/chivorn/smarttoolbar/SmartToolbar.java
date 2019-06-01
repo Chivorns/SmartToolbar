@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Created by Hum Vorn on 3/2/2018.
+ * Created on 3/2/2018.
  */
 
 public class SmartToolbar extends LinearLayout {
@@ -320,9 +320,7 @@ public class SmartToolbar extends LinearLayout {
                 viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            mMainLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        }
+                        mMainLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         layoutHeight = mMainLayout.getMeasuredHeight() + dpToPx(DEFAULT_STATUS_BAR_HEIGHT);
 
                         mMainLayoutParams.height = layoutHeight;
@@ -341,9 +339,7 @@ public class SmartToolbar extends LinearLayout {
                 viewTreeObserverStatusBar.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            vStatusBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        }
+                        vStatusBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         statusBarLayoutParams = vStatusBar.getLayoutParams();
                         statusBarLayoutParams.height = dpToPx(DEFAULT_STATUS_BAR_HEIGHT);
                         vStatusBar.setLayoutParams(statusBarLayoutParams);
